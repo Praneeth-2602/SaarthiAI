@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  api:
+    build:
+      context: ./backend/api
+    environment:
+      PORT: 4000
+      FRONTEND_URL: http://localhost:3000
+      MONGODB_URI: mongodb://mongodb:27017/saarthi
+      AGENT_SERVICE_URL: http://agents:8000
+      JWT_SECRET: replace-with-a-long-secret
+      OTP_SECRET: replace-with-a-second-long-secret
+      UPLOAD_DIR: /app/storage/uploads
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./storage/uploads:/app/storage/uploads
+    depends_on:
+      - mongodb
+      - agents
+
+  web:
+    build:
+      context: ./frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+      NEXT_PUBLIC_PROXY_BASE: /api/proxy
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  agents:
+    build:
+      context: ./backend/agents
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/saarthi
+      CHROMA_PERSIST_DIR: /app/chroma_db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
