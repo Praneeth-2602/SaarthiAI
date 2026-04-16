@@ -31,12 +31,16 @@ export function DashboardHome() {
   }, []);
 
   return (
-    <div className="dashboard-grid">
-      <section className="panel">
-        <div className="eyebrow">Create a new case</div>
-        <h2 className="section-title">Start with what the family already knows</h2>
+    <div className="overview-grid">
+      <section className="soft-card feature-card">
+        <div className="eyebrow">Create a case</div>
+        <h2>Start with what the family already knows.</h2>
+        <p className="section-copy">
+          You do not need every detail right now. Saarthi can begin with the deceased
+          person&apos;s name and help fill the rest in as the case progresses.
+        </p>
         <form
-          className="stack"
+          className="stack-form"
           onSubmit={async (event) => {
             event.preventDefault();
             try {
@@ -62,18 +66,18 @@ export function DashboardHome() {
             }
           }}
         >
-          <div className="grid-2">
+          <div className="form-grid">
             <label className="label">
               Deceased name
               <input
-                className="input"
+                className="field"
                 onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
                 value={form.name}
               />
             </label>
             <label className="label">
               Preferred language
-              <select className="select" onChange={(event) => setLanguage(event.target.value)} value={language}>
+              <select className="field" onChange={(event) => setLanguage(event.target.value)} value={language}>
                 <option value="en">English</option>
                 <option value="hi">Hindi</option>
                 <option value="te">Telugu</option>
@@ -83,7 +87,7 @@ export function DashboardHome() {
             <label className="label">
               PAN
               <input
-                className="input"
+                className="field"
                 onChange={(event) => setForm((current) => ({ ...current, pan: event.target.value }))}
                 value={form.pan}
               />
@@ -91,7 +95,7 @@ export function DashboardHome() {
             <label className="label">
               Aadhaar
               <input
-                className="input"
+                className="field"
                 onChange={(event) => setForm((current) => ({ ...current, aadhaar: event.target.value }))}
                 value={form.aadhaar}
               />
@@ -99,7 +103,7 @@ export function DashboardHome() {
             <label className="label">
               Date of death
               <input
-                className="input"
+                className="field"
                 onChange={(event) => setForm((current) => ({ ...current, dateOfDeath: event.target.value }))}
                 type="date"
                 value={form.dateOfDeath}
@@ -108,7 +112,7 @@ export function DashboardHome() {
             <label className="label">
               Employer
               <input
-                className="input"
+                className="field"
                 onChange={(event) => setForm((current) => ({ ...current, employer: event.target.value }))}
                 value={form.employer}
               />
@@ -116,7 +120,7 @@ export function DashboardHome() {
             <label className="label">
               City
               <input
-                className="input"
+                className="field"
                 onChange={(event) => setForm((current) => ({ ...current, city: event.target.value }))}
                 value={form.city}
               />
@@ -124,31 +128,32 @@ export function DashboardHome() {
             <label className="label">
               State
               <input
-                className="input"
+                className="field"
                 onChange={(event) => setForm((current) => ({ ...current, state: event.target.value }))}
                 value={form.state}
               />
             </label>
           </div>
-          {error ? <div className="badge">{error}</div> : null}
+          {error ? <div className="inline-error">{error}</div> : null}
           <button className="primary-button" disabled={loading} type="submit">
             {loading ? "Creating..." : "Create case and open workspace"}
           </button>
         </form>
       </section>
 
-      <section className="panel">
+      <section className="soft-card">
         <div className="eyebrow">Resume existing work</div>
-        <h2 className="section-title">Recent cases</h2>
-        <div className="card-list">
+        <h2>Recent cases</h2>
+        <p className="section-copy">Pick up where you left off without hunting through screens.</p>
+        <div className="list-stack">
           {cases.length ? (
             cases.map((caseRecord) => (
-              <Link className="policy-card" href={`/case/${caseRecord._id}`} key={caseRecord._id}>
-                <div className="split">
+              <Link className="case-list-card" href={`/case/${caseRecord._id}`} key={caseRecord._id}>
+                <div className="card-topline">
                   <strong>{caseRecord.deceased.name}</strong>
-                  <span className="badge">{caseRecord.phase}</span>
+                  <span className="status-pill">{caseRecord.phase.replaceAll("_", " ")}</span>
                 </div>
-                <p className="muted small">
+                <p className="small-copy">
                   {caseRecord.deceased.dateOfDeath?.slice(0, 10) || "Date not added"} •{" "}
                   {caseRecord.policies.length} policies
                 </p>

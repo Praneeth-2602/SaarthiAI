@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 
-const display = Cormorant_Garamond({
+const display = Fraunces({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["500", "600", "700"]
@@ -16,7 +16,7 @@ const body = Manrope({
 
 export const metadata: Metadata = {
   title: "Saarthi",
-  description: "Agentic insurance claims navigator for nominees."
+  description: "A calmer claims journey for families managing life insurance after loss."
 };
 
 export default function RootLayout({

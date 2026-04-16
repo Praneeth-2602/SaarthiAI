@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { clearSession, getSession } from "@/lib/store";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
@@ -21,31 +21,29 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     setReady(true);
   }, [router]);
 
-  const navItems = useMemo(
-    () => [
-      { href: "/", label: "Dashboard" },
-      { href: "/chat", label: "Chat" },
-      { href: "/documents", label: "Documents" }
-    ],
-    []
-  );
+  const navItems = [
+    { href: "/", label: "Dashboard" },
+    { href: "/chat", label: "Chat" },
+    { href: "/documents", label: "Documents" }
+  ] as const;
 
   if (!ready) {
     return <div className="loading-screen">Opening your Saarthi workspace...</div>;
   }
 
   return (
-    <main className="page-shell">
-      <header className="top-nav">
-        <div>
+    <main className="dashboard-shell">
+      <header className="shell-header">
+        <div className="brand-lockup">
           <div className="eyebrow">Saarthi Workspace</div>
-          <h1 className="section-title">Welcome, {nomineeName}</h1>
+          <h1>Welcome, {nomineeName}</h1>
+          <p className="header-copy">A simpler workspace for policy discovery, documents, and letters.</p>
         </div>
-        <div className="nav-row">
-          <nav className="nav-links">
+        <div className="shell-actions">
+          <nav className="shell-nav">
             {navItems.map((item) => (
               <Link
-                className={`nav-link ${pathname === item.href ? "active" : ""}`}
+                className={`nav-chip ${pathname === item.href ? "active" : ""}`}
                 href={item.href}
                 key={item.href}
               >
@@ -54,7 +52,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
           <button
-            className="ghost-button"
+            className="secondary-button"
             onClick={() => {
               clearSession();
               router.replace("/login");
@@ -65,7 +63,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </button>
         </div>
       </header>
-      {children}
+      <section className="shell-main">{children}</section>
     </main>
   );
 }

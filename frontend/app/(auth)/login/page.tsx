@@ -13,15 +13,16 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="page-shell">
-      <section className="hero" style={{ maxWidth: 720, margin: "0 auto" }}>
+    <main className="auth-shell">
+      <section className="auth-card">
         <div className="eyebrow">Secure nominee access</div>
-        <h1>Log in with a phone OTP.</h1>
-        <p>
-          For the MVP, Saarthi sends a dev-safe code directly in the response so you can move through the full flow without SMS setup.
+        <h1>Start with a phone number.</h1>
+        <p className="lead small-copy">
+          We only ask for enough to open the workspace. In development, the OTP is shown
+          on screen so the flow still works without SMS setup.
         </p>
         <form
-          className="stack"
+          className="stack-form"
           onSubmit={async (event) => {
             event.preventDefault();
             try {
@@ -42,15 +43,15 @@ export default function LoginPage() {
           <label className="label">
             Phone number
             <input
-              className="input"
+              className="field"
               inputMode="numeric"
               onChange={(event) => setPhone(event.target.value)}
               placeholder="Enter nominee phone number"
               value={phone}
             />
           </label>
-          {debugOtp ? <div className="badge">Debug OTP: {debugOtp}</div> : null}
-          {error ? <div className="badge">{error}</div> : null}
+          {debugOtp ? <div className="inline-note">Debug OTP: {debugOtp}</div> : null}
+          {error ? <div className="inline-error">{error}</div> : null}
           <button className="primary-button" disabled={loading} type="submit">
             {loading ? "Sending..." : "Request OTP"}
           </button>
