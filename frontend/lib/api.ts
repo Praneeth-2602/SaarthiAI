@@ -23,8 +23,10 @@ async function apiRequest<T>(path: string, options?: RequestOptions): Promise<T>
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: "Request failed." }));
-    throw new Error(error.error ?? "Request failed.");
+    const error = await response
+      .json()
+      .catch(() => ({ error: "Request failed.", detail: "Request failed." }));
+    throw new Error(error.error ?? error.detail ?? "Request failed.");
   }
 
   return (await response.json()) as T;
@@ -78,8 +80,10 @@ export const uploadDocument = async (formData: FormData) => {
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: "Upload failed." }));
-    throw new Error(error.error ?? "Upload failed.");
+    const error = await response
+      .json()
+      .catch(() => ({ error: "Upload failed.", detail: "Upload failed." }));
+    throw new Error(error.error ?? error.detail ?? "Upload failed.");
   }
 
   return (await response.json()) as DocumentRecord;

@@ -8,7 +8,7 @@ export function MessageBubble({ message }: { message: Message }) {
 
   return (
     <div className={className}>
-      <strong>{message.role === "user" ? "You" : "Saarthi"}</strong>
+      <div className="bubble-label">{message.role === "user" ? "You" : "Saarthi"}</div>
       <div>{message.content}</div>
     </div>
   );

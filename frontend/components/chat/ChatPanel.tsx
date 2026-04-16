@@ -82,31 +82,31 @@ export function ChatPanel({
   }, [loading]);
 
   return (
-    <section className="panel">
-      <div className="split">
+    <section className="soft-card chat-card">
+      <div className="card-topline chat-heading">
         <div>
-          <div className="eyebrow">Case Conversation</div>
-          <h2 className="section-title">Guided chat</h2>
+          <div className="eyebrow">Guided conversation</div>
+          <h2>Talk through the case</h2>
         </div>
-        <div style={{ minWidth: 160 }}>
+        <div className="language-slot">
           <LanguageSelector languages={LANGUAGES} onChange={setLanguage} selected={language} />
         </div>
       </div>
-      <p className="muted">{helperText}</p>
-      <div className="message-list">
+      <p className="section-copy">{helperText}</p>
+      <div className="message-feed">
         {messages.map((message, index) => (
           <MessageBubble key={`${message.role}-${index}`} message={message} />
         ))}
       </div>
-      <div className="stack" style={{ marginTop: 16 }}>
+      <div className="composer">
         <textarea
-          className="textarea"
+          className="field field-area"
           onChange={(event) => setInput(event.target.value)}
-          placeholder="Describe what you know about the case, or tell Saarthi what you uploaded."
+          placeholder="Tell Saarthi what you know, what was uploaded, or what the family is worried about."
           value={input}
         />
-        <div className="split">
-          <span className="muted small">The response streams live from the agent service.</span>
+        <div className="helper-row">
+          <span className="small-copy">Responses stream live so the next step appears as soon as it is ready.</span>
           <button className="primary-button" onClick={() => sendMessage(input)} type="button">
             {loading ? "Working..." : "Send message"}
           </button>

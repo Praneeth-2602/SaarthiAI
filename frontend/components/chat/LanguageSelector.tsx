@@ -15,7 +15,7 @@ export function LanguageSelector({
   return (
     <select
       aria-label="Preferred language"
-      className="select"
+      className="field compact-field"
       onChange={(event) => onChange(event.target.value)}
       value={selected}
     >
