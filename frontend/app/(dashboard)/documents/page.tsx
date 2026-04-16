@@ -23,19 +23,20 @@ export default function DocumentsPage() {
   }, []);
 
   return (
-    <section className="panel">
+    <section className="soft-card">
       <div className="eyebrow">Document hub</div>
-      <h2 className="section-title">Latest uploads</h2>
-      {error ? <div className="badge">{error}</div> : null}
-      <div className="card-list">
+      <h2>Latest uploads</h2>
+      <p className="section-copy">Documents from the most recently opened case appear here.</p>
+      {error ? <div className="inline-error">{error}</div> : null}
+      <div className="list-stack">
         {documents.length ? (
           documents.map((document) => (
-            <article className="doc-card" key={document._id}>
-              <div className="split">
+            <article className="checklist-card" key={document._id}>
+              <div className="card-topline">
                 <strong>{document.originalName}</strong>
-                <span className="badge subtle-badge">{document.validationStatus}</span>
+                <span className="status-pill">{document.validationStatus}</span>
               </div>
-              <p className="muted small">
+              <p className="small-copy">
                 {document.documentType} • {document.mimeType} • {(document.size / 1024).toFixed(1)} KB
               </p>
             </article>

@@ -16,5 +16,5 @@ export default function ChatRedirectPage() {
     router.replace("/");
   }, [router]);
 
-  return <div className="panel">Opening the latest active case...</div>;
+  return <div className="soft-card">Opening the latest active case...</div>;
 }

@@ -8,16 +8,16 @@ export function DocumentChecklist({
   validations?: Record<string, string>;
 }) {
   return (
-    <section className="doc-card">
-      <div className="split">
+    <section className="checklist-card">
+      <div className="card-topline">
         <h4>{title}</h4>
-        <span className="badge">{requirements.length} docs</span>
+        <span className="status-pill">{requirements.length} docs</span>
       </div>
-      <div className="doc-list">
+      <div className="list-stack">
         {requirements.map((requirement) => (
-          <div className="split" key={requirement}>
+          <div className="checklist-row" key={requirement}>
             <span>{requirement}</span>
-            <span className="badge subtle-badge">
+            <span className={`status-pill ${validations?.[requirement] === "valid" ? "is-valid" : "is-pending"}`}>
               {validations?.[requirement] ?? "pending"}
             </span>
           </div>

@@ -38,7 +38,7 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
   }, [caseRecord]);
 
   if (!caseRecord) {
-    return <div className="panel">Loading case details...</div>;
+    return <div className="soft-card">Loading case details...</div>;
   }
 
   const letters = Object.values(caseRecord.agentState?.claim_letters_generated ?? {});
@@ -46,24 +46,24 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
   const documentRequirements = caseRecord.agentState?.document_requirements ?? {};
 
   return (
-    <div className="case-grid">
-      <div className="stack" style={{ gap: 18 }}>
-        <section className="panel">
-          <div className="split">
+    <div className="case-page-grid">
+      <div className="primary-column">
+        <section className="soft-card case-hero">
+          <div className="card-topline">
             <div>
               <div className="eyebrow">Case file</div>
-              <h2 className="section-title">{caseRecord.deceased.name}</h2>
+              <h2>{caseRecord.deceased.name}</h2>
             </div>
-            <span className="badge">{caseRecord.phase}</span>
+            <span className="status-pill">{caseRecord.phase.replaceAll("_", " ")}</span>
           </div>
-          <div className="grid-2">
-            <div className="label">
-              Date of death
-              <div className="input">{caseRecord.deceased.dateOfDeath?.slice(0, 10) || "Not provided"}</div>
+          <div className="summary-strip">
+            <div className="detail-card">
+              <span>Date of death</span>
+              <strong>{caseRecord.deceased.dateOfDeath?.slice(0, 10) || "Not provided"}</strong>
             </div>
-            <div className="label">
-              Employer
-              <div className="input">{caseRecord.deceased.employer || "Not provided"}</div>
+            <div className="detail-card">
+              <span>Employer</span>
+              <strong>{caseRecord.deceased.employer || "Not provided"}</strong>
             </div>
           </div>
         </section>
@@ -76,7 +76,7 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
         />
       </div>
 
-      <div className="stack" style={{ gap: 18 }}>
+      <div className="secondary-column">
         <ClaimStatus
           lettersCount={letters.length}
           phase={caseRecord.phase}
@@ -84,14 +84,14 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
           readyForDrafting={Boolean(caseRecord.agentState?.ready_for_drafting)}
         />
 
-        <section className="panel">
-          <div className="split">
+        <section className="soft-card">
+          <div className="card-topline">
             <div>
               <div className="eyebrow">Discovered policies</div>
-              <h2 className="section-title">Coverage summary</h2>
+              <h2>Coverage summary</h2>
             </div>
           </div>
-          <div className="policy-grid">
+          <div className="policy-list">
             {caseRecord.policies.length ? (
               caseRecord.policies.map((policy) => (
                 <PolicyCard key={policy.policyNumber} policy={policy} />
@@ -104,11 +104,12 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
           </div>
         </section>
 
-        <section className="panel">
+        <section className="soft-card">
           <div className="eyebrow">Document workspace</div>
-          <h2 className="section-title">Uploads and validation</h2>
+          <h2>Uploads and validation</h2>
+          <p className="section-copy">Choose the policy, upload the document, and Saarthi will refresh the checklist.</p>
           <form
-            className="stack"
+            className="stack-form"
             onSubmit={async (event) => {
               event.preventDefault();
               const formElement = event.currentTarget;
@@ -143,7 +144,7 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
             <label className="label">
               Policy
               <select
-                className="select"
+                className="field"
                 onChange={(event) => setSelectedPolicy(event.target.value)}
                 value={selectedPolicy}
               >
@@ -160,7 +161,7 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
             <label className="label">
               Document type
               <select
-                className="select"
+                className="field"
                 onChange={(event) => setDocumentType(event.target.value)}
                 value={documentType}
               >
@@ -175,15 +176,15 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
             </label>
             <label className="label">
               File
-              <input accept=".pdf,image/*" className="input" name="file" type="file" />
+              <input accept=".pdf,image/*" className="field" name="file" type="file" />
             </label>
-            {error ? <div className="badge">{error}</div> : null}
+            {error ? <div className="inline-error">{error}</div> : null}
             <button className="primary-button" disabled={uploading} type="submit">
               {uploading ? "Uploading..." : "Upload document"}
             </button>
           </form>
 
-          <div className="stack" style={{ marginTop: 20 }}>
+          <div className="checklist-list">
             {caseRecord.policies.map((policy) => (
               <DocumentChecklist
                 key={policy.policyNumber}
@@ -195,16 +196,16 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
           </div>
         </section>
 
-        <section className="panel">
+        <section className="soft-card">
           <div className="eyebrow">Claim letters</div>
-          <h2 className="section-title">Drafts ready to review</h2>
-          <div className="stack">
+          <h2>Drafts ready to review</h2>
+          <div className="list-stack">
             {letters.length ? (
               letters.map((letter) => (
                 <article className="letter-box" key={letter.policy_number}>
-                  <div className="split">
+                  <div className="card-topline">
                     <strong>{letter.insurer}</strong>
-                    <span className="badge subtle-badge">{letter.generated_at}</span>
+                    <span className="status-pill is-valid">{letter.generated_at}</span>
                   </div>
                   <pre style={{ whiteSpace: "pre-wrap", marginBottom: 0 }}>{letter.letter}</pre>
                 </article>
