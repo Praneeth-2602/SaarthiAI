@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .next/
+.next-build/
 coverage/
 .venv/
 venv/
@@ -17,5 +18,3 @@ playwright-report/
 *.tsbuildinfo
 storage/uploads/*
 !storage/uploads/.gitkeep
-backend/agents/chroma_db/
-backend/agents/.pytest_cache/

@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "backend/api",
     "frontend"
   ],
   "scripts": {
-    "dev:api": "npm run dev -w @saarthi/api",
-    "dev:web": "npm run dev -w @saarthi/web",
-    "build": "npm run build -w @saarthi/api && npm run build -w @saarthi/web",
-    "test": "npm run test -w @saarthi/api && npm run test -w @saarthi/web",
-    "lint": "npm run lint -w @saarthi/web",
-    "typecheck": "npm run typecheck -w @saarthi/api && npm run typecheck -w @saarthi/web"
+    "dev:api": "python -m uvicorn backend.main:app --reload --port 4000",
+    "dev:web": "npm run dev -w @saarthi/frontend",
+    "build": "npm run build -w @saarthi/frontend",
+    "test": "npm run test -w @saarthi/frontend",
+    "lint": "npm run typecheck -w @saarthi/frontend",
+    "typecheck": "npm run typecheck -w @saarthi/frontend"
   }
 }
