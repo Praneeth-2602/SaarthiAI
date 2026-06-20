@@ -30,14 +30,14 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        NOMINEE (Browser/Mobile)                  │
-│                    Next.js App Router Frontend                   │
+│                        NOMINEE (Browser/Mobile)                 │
+│                    Next.js App Router Frontend                  │
 └──────────────────────────────┬──────────────────────────────────┘
                                │ HTTPS
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                   Node.js / Express API Gateway                  │
-│         Auth │ Session │ File Upload │ Webhook Handler           │
+│                   Node.js / Express API Gateway                 │
+│         Auth │ Session │ File Upload │ Webhook Handler          │
 └──────┬───────────────────────┬────────────────────┬─────────────┘
        │                       │                    │
        ▼                       ▼                    ▼
@@ -50,7 +50,7 @@
 │  Docs      │        │  Orchestrator  │   │  Razorpay         │
 └────────────┘        └───────┬────────┘   └───────────────────┘
                               │
-              ┌───────────────┼────────────────┐
+              ┌───────────────┼────────────────┐───────────────┐
               ▼               ▼                ▼               ▼
       ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
       │  Discovery   │ │  Document    │ │   Drafting   │ │  Escalation  │
